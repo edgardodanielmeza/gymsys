@@ -50,7 +50,7 @@ Vamos a integrar el tema del panel de administración.
     ```
 2.  **Publica los assets y la configuración de AdminLTE**:
     ```bash
-    php artisan adminlte:install --type=full --with-livewire
+    php artisan adminlte:install --type=full
     ```
     Cuando te pregunte si quieres sobreescribir archivos, responde que **sí (yes)**, especialmente para las vistas de autenticación.
 
@@ -108,7 +108,7 @@ Para que el CRUD de sucursales aparezca en el menú lateral del panel:
         // AGREGA ESTE BLOQUE
         [
             'text'    => 'Sucursales',
-            'url'     => 'sucursales',
+            'route'   => 'sucursales.index',
             'icon'    => 'fas fa-fw fa-store',
             'can'     => 'admin', // Opcional: define un gate/permission
         ],
@@ -116,18 +116,54 @@ Para que el CRUD de sucursales aparezca en el menú lateral del panel:
         // Continúa el resto del menú...
     ],
     ```
-4.  **(Opcional pero recomendado)** Para que `can => 'admin'` funcione, abre `app/Providers/AuthServiceProvider.php` y en el método `boot()`, define el Gate:
+4.  **(Opcional pero recomendado) Definir Permiso de Administrador**: Para que la opción de menú `can => 'admin'` funcione y restrinja el acceso solo a administradores, sigue estos pasos:
+
+    **Paso A: Crear `AuthServiceProvider`**
+
+    El archivo `AuthServiceProvider.php` no es creado por defecto en Jetstream. Debes crearlo manualmente.
+
+    Crea el archivo en la ruta: `app/Providers/AuthServiceProvider.php` y pega el siguiente contenido:
+
     ```php
+    <?php
+
+    namespace App\Providers;
+
+    use App\Models\User;
     use Illuminate\Support\Facades\Gate;
+    use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-    public function boot(): void
+    class AuthServiceProvider extends ServiceProvider
     {
-        $this->registerPolicies();
+        protected $policies = [
+            // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        ];
 
-        Gate::define('admin', function ($user) {
-            return $user->isAdmin();
-        });
+        public function boot(): void
+        {
+            $this->registerPolicies();
+
+            Gate::define('admin', function (User $user) {
+                return $user->isAdmin();
+            });
+        }
     }
+    ```
+
+    **Paso B: Registrar el nuevo proveedor**
+
+    Ahora, registra el proveedor que acabas de crear en la configuración de tu aplicación.
+
+    1.  Abre el archivo `config/app.php`.
+    2.  Busca el array `providers`.
+    3.  Añade tu `AuthServiceProvider` a la lista:
+
+    ```php
+        //... otros providers
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
+        App\Providers\AuthServiceProvider::class, // <-- AÑADE ESTA LÍNEA
+    ],
     ```
 
 ## 6. Base de Datos y Compilación

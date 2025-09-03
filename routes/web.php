@@ -8,22 +8,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route for branch selection
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/seleccionar-sucursal', SelectSucursal::class)->name('sucursal.select');
-});
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'sucursal.selected', // Custom middleware to ensure a branch is selected
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // This route is for selecting the branch, so it can't have the 'sucursal.selected' middleware
+    Route::get('/seleccionar-sucursal', SelectSucursal::class)->name('sucursal.select');
 
-    // CRUD Sucursales
-    Route::get('/sucursales', SucursalManager::class)->name('sucursales.index');
+    // These routes require a branch to be selected
+    Route::middleware(['sucursal.selected'])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+
+        // CRUD Sucursales
+        Route::get('/sucursales', SucursalManager::class)->name('sucursales.index');
+    });
 });
