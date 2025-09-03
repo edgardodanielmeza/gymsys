@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -63,5 +64,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * The sucursales that belong to the user.
+     */
+    public function sucursales()
+    {
+        return $this->belongsToMany(Sucursal::class, 'sucursal_user');
+    }
+
+    /**
+     * Check if the user has the 'admin' role.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }
