@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Sucursal extends Model
+class TipoMembresia extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Sucursal extends Model
      *
      * @var string
      */
-    protected $table = 'sucursales';
+    protected $table = 'tipos_membresia';
 
     /**
      * The attributes that are mass assignable.
@@ -24,12 +24,10 @@ class Sucursal extends Model
      */
     protected $fillable = [
         'nombre',
-        'direccion',
-        'telefono',
-        'email',
-        'capacidad_maxima',
-        'horario_operacion',
-        'activa',
+        'descripcion',
+        'precio',
+        'duracion_dias',
+        'activo',
     ];
 
     /**
@@ -38,22 +36,17 @@ class Sucursal extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'activa' => 'boolean',
+        'precio' => 'decimal:2',
+        'activo' => 'boolean',
     ];
 
     /**
-     * The users that belong to the sucursal.
+     * Get all of the a a for the TipoMembresia
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users()
+    public function membresias(): HasMany
     {
-        return $this->belongsToMany(User::class, 'sucursal_user');
-    }
-
-    /**
-     * Get all of the pagos for the Sucursal
-     */
-    public function pagos(): HasMany
-    {
-        return $this->hasMany(Pago::class);
+        return $this->hasMany(Membresia::class);
     }
 }

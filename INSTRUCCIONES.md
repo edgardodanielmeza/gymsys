@@ -168,7 +168,12 @@ Para que el CRUD de sucursales aparezca en el menú lateral del panel:
 
 ## 6. Base de Datos y Compilación
 
-1.  **Ejecuta las migraciones y los seeders**: Este comando creará las tablas y registrará el usuario administrador y las sucursales iniciales.
+1.  **Ejecuta las migraciones y los seeders**: Este comando revisará todos los archivos de migración y creará todas las tablas necesarias en la base de datos.
+    -   **Tablas iniciales**: `users`, `sucursales`, etc.
+    -   **Nuevas tablas de módulos**: `tipos_membresia`, `miembros`, `membresias`, y `pagos`.
+
+    El seeder también registrará el usuario administrador y las sucursales iniciales. Si necesitas refrescar toda la base de datos en el futuro, puedes usar `php artisan migrate:fresh --seed`.
+
     ```bash
     php artisan migrate --seed
     ```

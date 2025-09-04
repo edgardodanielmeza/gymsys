@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Sucursal extends Model
+class Membresia extends Model
 {
     use HasFactory;
 
@@ -15,7 +16,7 @@ class Sucursal extends Model
      *
      * @var string
      */
-    protected $table = 'sucursales';
+    protected $table = 'membresias';
 
     /**
      * The attributes that are mass assignable.
@@ -23,13 +24,11 @@ class Sucursal extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nombre',
-        'direccion',
-        'telefono',
-        'email',
-        'capacidad_maxima',
-        'horario_operacion',
-        'activa',
+        'miembro_id',
+        'tipo_membresia_id',
+        'fecha_inicio',
+        'fecha_fin',
+        'estado',
     ];
 
     /**
@@ -38,19 +37,28 @@ class Sucursal extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'activa' => 'boolean',
+        'fecha_inicio' => 'date',
+        'fecha_fin' => 'date',
     ];
 
     /**
-     * The users that belong to the sucursal.
+     * Get the member that owns the membership.
      */
-    public function users()
+    public function miembro(): BelongsTo
     {
-        return $this->belongsToMany(User::class, 'sucursal_user');
+        return $this->belongsTo(Miembro::class);
     }
 
     /**
-     * Get all of the pagos for the Sucursal
+     * Get the type of the membership.
+     */
+    public function tipoMembresia(): BelongsTo
+    {
+        return $this->belongsTo(TipoMembresia::class);
+    }
+
+    /**
+     * Get all of the pagos for the Membresia
      */
     public function pagos(): HasMany
     {
