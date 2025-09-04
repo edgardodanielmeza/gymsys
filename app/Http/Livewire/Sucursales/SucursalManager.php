@@ -92,6 +92,6 @@ class SucursalManager extends Component
 
         return view('livewire.sucursales.sucursal-manager', [
             'sucursales' => $sucursales,
-        ]);
+        ])->layout('layouts.app');
     }
 }
