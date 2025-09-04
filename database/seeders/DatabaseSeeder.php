@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             InitialSetupSeeder::class,
+            TipoMembresiaSeeder::class,
             // Aquí puedes agregar otros seeders en el futuro
         ]);
     }

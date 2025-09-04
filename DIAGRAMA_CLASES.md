@@ -1,6 +1,6 @@
-# Diagrama de Clases (Fase 1)
+# Diagrama de Clases (Fase 2)
 
-Este diagrama muestra las relaciones principales entre los modelos de la aplicación en esta primera fase de desarrollo. Está escrito en sintaxis de Mermaid. Puedes copiar y pegar el código en un editor de Mermaid online (como [mermaid.live](https://mermaid.live)) para visualizarlo.
+Este diagrama muestra las relaciones principales entre los modelos de la aplicación tras la implementación del módulo de membresías. Está escrito en sintaxis de Mermaid.
 
 ```mermaid
 classDiagram
@@ -8,61 +8,87 @@ classDiagram
         +int id
         +string name
         +string email
-        +string password
         +bool activo
         +int sucursal_id
-        +hasRoles()
         +sucursal() Sucursal
+        +pagos() Pago[]
     }
 
     class Sucursal {
         +int id
         +string nombre
         +string direccion
-        +string telefono
-        +string email
-        +int capacidad_maxima
-        +string horario_operacion
         +bool activo
         +users() User[]
+        +miembros() Miembro[]
     }
 
     class Role {
         +int id
         +string name
-        +users() User[]
     }
 
     class Miembro {
-        <<Futuro>>
         +int id
         +string documento_identidad
         +string nombres
         +string apellidos
+        +int sucursal_id
+        +bool activo
+        +sucursal() Sucursal
+        +membresias() Membresia[]
+        +membresiaActiva() Membresia
+    }
+
+    class TipoMembresia {
+        +int id
+        +string nombre
+        +decimal precio
+        +int duracion_en_dias
+        +bool activo
         +membresias() Membresia[]
     }
 
     class Membresia {
-        <<Futuro>>
         +int id
         +int miembro_id
+        +int tipo_membresia_id
         +date fecha_inicio
         +date fecha_fin
         +string estado
         +miembro() Miembro
+        +tipoMembresia() TipoMembresia
+        +pagos() Pago[]
     }
 
-    User "1" -- "1" Sucursal : "pertenece a (principal)"
+    class Pago {
+      +int id
+      +int membresia_id
+      +int user_id
+      +decimal monto
+      +string metodo_pago
+      +membresia() Membresia
+      +usuario() User
+    }
+
+    User "1" -- "1" Sucursal : "pertenece a"
     User "1" -- "N" Role : "tiene"
-    Sucursal "1" -- "N" User : "tiene asignados"
+    User "1" -- "N" Pago : "registra"
 
+    Miembro "1" -- "1" Sucursal : "es de"
     Miembro "1" -- "N" Membresia : "tiene"
-    Membresia "1" -- "1" Miembro : "pertenece a"
 
+    Membresia "1" -- "1" Miembro : "pertenece a"
+    Membresia "1" -- "1" TipoMembresia : "es de tipo"
+    Membresia "1" -- "N" Pago : "tiene"
+
+    Pago "1" -- "1" Membresia : "corresponde a"
 ```
 
 ### Descripción de Relaciones:
 
-*   **User - Sucursal**: Un `User` (empleado/admin) tiene asignada una `Sucursal` principal. Una `Sucursal` puede tener muchos `Users` asignados.
-*   **User - Role**: Un `User` puede tener uno o más `Roles` (ej. 'Admin', 'Recepcionista'). Un `Role` puede ser asignado a muchos `Users`. (Relación gestionada por Spatie).
-*   **Miembro - Membresia (Futuro)**: Se planea que un `Miembro` (cliente del gym) pueda tener un historial de múltiples `Membresias`. Cada `Membresia` pertenece a un solo `Miembro`.
+*   Un **User** (empleado) pertenece a una **Sucursal** y puede registrar muchos **Pagos**.
+*   Un **Miembro** (cliente) está registrado en una **Sucursal** principal y puede tener múltiples **Membresias** a lo largo del tiempo.
+*   Una **Membresia** es de un **TipoMembresia** específico (ej. Mensual) y pertenece a un solo **Miembro**.
+*   Una **Membresia** puede tener asociados uno o más **Pagos** (ej. pago inicial, cuotas).
+*   Un **Pago** está siempre asociado a una **Membresia** y es registrado por un **User**.

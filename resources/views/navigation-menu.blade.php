@@ -16,15 +16,33 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @role('Admin')
-                    <x-nav-link href="{{ route('admin.sucursales.index') }}" :active="request()->routeIs('admin.sucursales.index')">
-                        {{ __('Sucursales') }}
+                    @role('Admin|Recepcionista')
+                    <x-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index')">
+                        {{ __('Miembros') }}
                     </x-nav-link>
+                    @endrole
+
+                    @role('Admin')
+                    <div class="hidden sm:flex">
+                        <x-nav-link href="{{ route('admin.sucursales.index') }}" :active="request()->routeIs('admin.sucursales.index')">
+                            {{ __('Sucursales') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('admin.tipos-membresia.index') }}" :active="request()->routeIs('admin.tipos-membresia.index')" class="ml-4">
+                            {{ __('Tipos de Membresía') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('admin.pagos.index') }}" :active="request()->routeIs('admin.pagos.index')" class="ml-4">
+                            {{ __('Pagos') }}
+                        </x-nav-link>
+                    </div>
                     @endrole
                 </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="ms-3 relative">
+                    <x-theme-switcher />
+                </div>
+
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ms-3 relative">
@@ -149,15 +167,27 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            @role('Admin|Recepcionista')
+            <x-responsive-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index')">
+                {{ __('Miembros') }}
+            </x-responsive-nav-link>
+            @endrole
+
             @role('Admin')
             <x-responsive-nav-link href="{{ route('admin.sucursales.index') }}" :active="request()->routeIs('admin.sucursales.index')">
                 {{ __('Sucursales') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('admin.tipos-membresia.index') }}" :active="request()->routeIs('admin.tipos-membresia.index')">
+                {{ __('Tipos de Membresía') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('admin.pagos.index') }}" :active="request()->routeIs('admin.pagos.index')">
+                {{ __('Pagos') }}
             </x-responsive-nav-link>
             @endrole
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 me-3">
@@ -166,8 +196,12 @@
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+
+                <div class="ms-auto">
+                    <x-theme-switcher />
                 </div>
             </div>
 

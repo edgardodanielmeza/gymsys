@@ -33,13 +33,21 @@ php artisan migrate
 
 ### Paso 4: Poblar la Base de Datos con Datos Iniciales
 
-El siguiente comando ejecutará el seeder que he creado. Esto creará los roles, las sucursales y el usuario administrador (`admin@admin.com` / `gym123admin`).
+El siguiente comando ejecutará los seeders que he creado. Esto creará los roles, sucursales, tipos de membresía de ejemplo y el usuario administrador (`admin@admin.com` / `gym123admin`).
 
 ```bash
 php artisan db:seed
 ```
 
-### Paso 5: Compilar los Assets (Opcional pero recomendado)
+### Paso 5: Crear el Enlace Simbólico de Almacenamiento
+
+Este paso es **muy importante** para que las fotos de perfil de los miembros sean visibles públicamente.
+
+```bash
+php artisan storage:link
+```
+
+### Paso 6: Compilar los Assets (Opcional pero recomendado)
 
 Aunque tu script inicial ya lo hizo, si has hecho algún cambio o por si acaso, es bueno recompilar.
 
@@ -47,7 +55,7 @@ Aunque tu script inicial ya lo hizo, si has hecho algún cambio o por si acaso, 
 npm run build
 ```
 
-### Paso 6: Iniciar el Servidor
+### Paso 7: Iniciar el Servidor
 
 ¡Todo está listo! Ahora puedes iniciar el servidor de desarrollo de Laravel.
 
@@ -63,7 +71,11 @@ php artisan serve
     *   **Contraseña:** `gym123admin`
 3.  Después de iniciar sesión, deberías ser redirigido a la página **"Seleccionar Sucursal"**.
 4.  Elige una sucursal y haz clic en "Continuar".
-5.  Serás redirigido al Dashboard. En el menú de navegación, deberías ver un nuevo enlace: **"Sucursales"**.
-6.  Haz clic en "Sucursales" para acceder al CRUD y gestionar las sucursales.
+5.  Serás redirigido al Dashboard. En el menú de navegación, ahora deberías ver:
+    *   **Miembros**: Accesible para Admin y Recepcionista.
+    *   **Sucursales**: Solo para Admin.
+    *   **Tipos de Membresía**: Solo para Admin.
+6.  Navega a **"Tipos de Membresía"** para asegurarte de que puedes ver, crear y editar los planes.
+7.  Navega a **"Miembros"** y prueba a registrar un nuevo miembro. El formulario debería permitirte añadir sus datos, una foto, y seleccionar su primera membresía para inscribirlo.
 
-¡Con esto, la primera fase del proyecto está configurada y funcionando!
+¡Con esto, la segunda fase del proyecto está configurada y funcionando!
