@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+      x-data="themeSwitcher()"
+      :class="{ 'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,9 +19,44 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        {{-- Script para inicializar el tema y evitar FOUC --}}
+        <script>
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+              document.documentElement.classList.add('dark')
+            } else {
+              document.documentElement.classList.remove('dark')
+            }
+
+            function themeSwitcher() {
+                return {
+                    theme: localStorage.getItem('theme') || 'dark',
+                    setTheme(theme) {
+                        this.theme = theme;
+                        localStorage.setItem('theme', theme);
+                        this.applyTheme();
+                    },
+                    applyTheme() {
+                        if (this.theme === 'dark' || (this.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    },
+                    init() {
+                        this.applyTheme();
+                        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                            if (this.theme === 'system') {
+                                this.applyTheme();
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
+        <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
             {{ $slot }}
         </div>
 
