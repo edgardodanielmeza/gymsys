@@ -67,7 +67,7 @@
             </div>
 
             {{-- Historial de Pagos --}}
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg mb-6">
                 <div class="p-6">
                     <h3 class="text-xl font-semibold mb-4">Historial de Pagos</h3>
                     <table class="table-auto w-full text-sm">
@@ -80,6 +80,27 @@
                             <tr class="border-b dark:border-gray-700"><td class="px-4 py-2">{{ $pago->fecha_pago->format('d/m/Y H:i') }}</td><td class="px-4 py-2">${{ number_format($pago->monto, 2) }}</td><td class="px-4 py-2">{{ $pago->metodo_pago }}</td><td class="px-4 py-2">{{ $pago->membresia->tipoMembresia->nombre }} ({{ $pago->membresia->fecha_inicio->format('d/m/Y') }})</td></tr>
                             @empty
                             <tr><td colspan="4" class="text-center py-4">No hay pagos registrados.</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{-- Historial de Asistencias --}}
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-4">Historial de Asistencias</h3>
+                    <table class="table-auto w-full text-sm">
+                        <thead><tr class="bg-gray-100 dark:bg-gray-700"><th class="px-4 py-2 text-left">Fecha de Entrada</th><th class="px-4 py-2 text-left">Sucursal</th><th class="px-4 py-2 text-left">Registrado por</th></tr></thead>
+                        <tbody>
+                            @forelse($miembro->asistencias->sortByDesc('fecha_hora_entrada') as $asistencia)
+                            <tr class="border-b dark:border-gray-700">
+                                <td class="px-4 py-2">{{ $asistencia->fecha_hora_entrada->format('d/m/Y H:i') }}</td>
+                                <td class="px-4 py-2">{{ $asistencia->sucursal->nombre }}</td>
+                                <td class="px-4 py-2">{{ $asistencia->usuario->name ?? 'N/A' }}</td>
+                            </tr>
+                            @empty
+                            <tr><td colspan="3" class="text-center py-4">No hay asistencias registradas.</td></tr>
                             @endforelse
                         </tbody>
                     </table>

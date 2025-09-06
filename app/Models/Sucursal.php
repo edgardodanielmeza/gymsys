@@ -33,4 +33,12 @@ class Sucursal extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * Get all of the asistencias for the Sucursal.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }

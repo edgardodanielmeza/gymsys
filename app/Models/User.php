@@ -75,4 +75,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sucursal::class);
     }
+
+    /**
+     * Get all of the asistencias for the User.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }

@@ -5,6 +5,7 @@ use App\Livewire\Admin\SucursalManager;
 use App\Livewire\Admin\TipoMembresiaManager;
 use App\Livewire\Admin\PagoManager;
 use App\Livewire\Auth\SelectBranch;
+use App\Livewire\CheckinManager;
 use App\Livewire\MiembroManager;
 use App\Livewire\MiembroProfile;
 
@@ -26,6 +27,7 @@ Route::middleware([
 
     // Rutas Principales (Recepcionista y Admin)
     Route::middleware(['role:Admin|Recepcionista'])->group(function () {
+        Route::get('/check-in', CheckinManager::class)->name('check-in');
         Route::get('/miembros', MiembroManager::class)->name('miembros.index');
         Route::get('/miembros/{miembro}', MiembroProfile::class)->name('miembros.show');
     });

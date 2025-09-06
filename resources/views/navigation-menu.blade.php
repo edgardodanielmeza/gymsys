@@ -17,7 +17,10 @@
                     </x-nav-link>
 
                     @role('Admin|Recepcionista')
-                    <x-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index')">
+                    <x-nav-link href="{{ route('check-in') }}" :active="request()->routeIs('check-in')">
+                        {{ __('Check-in') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index*')" class="ml-4">
                         {{ __('Miembros') }}
                     </x-nav-link>
                     @endrole
@@ -168,7 +171,10 @@
             </x-responsive-nav-link>
 
             @role('Admin|Recepcionista')
-            <x-responsive-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index')">
+            <x-responsive-nav-link href="{{ route('check-in') }}" :active="request()->routeIs('check-in')">
+                {{ __('Check-in') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index*')">
                 {{ __('Miembros') }}
             </x-responsive-nav-link>
             @endrole

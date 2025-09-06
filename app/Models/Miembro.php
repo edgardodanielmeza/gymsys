@@ -61,4 +61,12 @@ class Miembro extends Model
     {
         return $this->hasOne(Membresia::class)->where('estado', 'activa')->latest('fecha_fin');
     }
+
+    /**
+     * Get all of the asistencias for the Miembro.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }

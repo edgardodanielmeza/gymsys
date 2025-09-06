@@ -26,7 +26,7 @@ class MiembroProfile extends Component
 
     public function mount(Miembro $miembro)
     {
-        $this->miembro = $miembro->load(['membresiaActiva', 'membresias.tipoMembresia', 'membresias.pagos', 'sucursal']);
+        $this->miembro = $miembro->load(['membresiaActiva', 'membresias.tipoMembresia', 'membresias.pagos', 'sucursal', 'asistencias.usuario', 'asistencias.sucursal']);
     }
 
     public function render()
@@ -86,6 +86,6 @@ class MiembroProfile extends Component
         session()->flash('message', 'Membresía renovada con éxito.');
         $this->closeRenewalModal();
         // Recargar los datos del miembro para reflejar la nueva membresía
-        $this->miembro->load(['membresiaActiva', 'membresias.tipoMembresia', 'membresias.pagos', 'sucursal']);
+        $this->miembro->load(['membresiaActiva', 'membresias.tipoMembresia', 'membresias.pagos', 'sucursal', 'asistencias.usuario', 'asistencias.sucursal']);
     }
 }
