@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\SucursalManager;
 use App\Livewire\Admin\TipoMembresiaManager;
 use App\Livewire\Admin\PagoManager;
+use App\Livewire\Admin\SettingsManager;
+use App\Livewire\Admin\UserManager;
 use App\Livewire\Auth\SelectBranch;
 use App\Livewire\CheckinManager;
 use App\Livewire\MiembroManager;
@@ -37,6 +39,7 @@ Route::middleware([
         Route::get('/sucursales', SucursalManager::class)->name('sucursales.index');
         Route::get('/tipos-membresia', TipoMembresiaManager::class)->name('tipos-membresia.index');
         Route::get('/pagos', PagoManager::class)->name('pagos.index');
-        // Aquí se pueden agregar más rutas de admin en el futuro
+        Route::get('/users', UserManager::class)->name('users.index');
+        Route::get('/settings', SettingsManager::class)->name('settings');
     });
 });
