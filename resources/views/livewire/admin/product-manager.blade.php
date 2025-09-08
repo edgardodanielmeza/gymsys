@@ -69,7 +69,7 @@
                                     <tr class="text-gray-700 dark:text-gray-300">
                                         <td class="border px-4 py-2">{{ $producto->nombre }}</td>
                                         <td class="border px-4 py-2">{{ $producto->categoria->nombre ?? 'N/A' }}</td>
-                                        <td class="border px-4 py-2">${{ number_format($producto->precio, 2) }}</td>
+                                        <td class="border px-4 py-2">{{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($producto->precio, 2) }}</td>
                                         <td class="border px-4 py-2 @if($producto->stock < 10) text-red-500 font-bold @endif">{{ $producto->stock }}</td>
                                         <td class="border px-4 py-2">
                                             <button wire:click="editProduct({{ $producto->id }})" class="bg-yellow-500 text-white font-bold py-1 px-2 rounded text-xs">Editar</button>

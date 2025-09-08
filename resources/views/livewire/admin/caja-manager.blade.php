@@ -27,9 +27,9 @@
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
                         <p><strong>Abierta por:</strong> {{ $cajaAbierta->user->name }}</p>
                         <p><strong>Fecha de Apertura:</strong> {{ $cajaAbierta->created_at->format('d/m/Y H:i') }}</p>
-                        <p><strong>Monto Inicial:</strong> ${{ number_format($cajaAbierta->monto_inicial, 2) }}</p>
-                        <p><strong>Ventas en Efectivo:</strong> ${{ number_format($total_ventas_efectivo, 2) }}</p>
-                        <p class="font-bold text-lg">Monto Calculado en Caja: ${{ number_format($cajaAbierta->monto_inicial + $total_ventas_efectivo, 2) }}</p>
+                        <p><strong>Monto Inicial:</strong> {{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($cajaAbierta->monto_inicial, 2) }}</p>
+                        <p><strong>Ventas en Efectivo:</strong> {{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($total_ventas_efectivo, 2) }}</p>
+                        <p class="font-bold text-lg">Monto Calculado en Caja: {{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($cajaAbierta->monto_inicial + $total_ventas_efectivo, 2) }}</p>
                     </div>
 
                     <form wire:submit.prevent="cerrarCaja" class="mt-6 border-t dark:border-gray-700 pt-6">

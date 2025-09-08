@@ -5,11 +5,14 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-center">
                         @if (isset($appSettings['gym_logo']))
                             <img src="{{ asset('storage/' . $appSettings['gym_logo']) }}" alt="{{ $appSettings['gym_name'] ?? config('app.name') }}" class="block h-9 w-auto">
                         @else
                             <x-application-mark class="block h-9 w-auto" />
+                        @endif
+                        @if (isset($appSettings['gym_name']))
+                            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $appSettings['gym_name'] }}</span>
                         @endif
                     </a>
                 </div>

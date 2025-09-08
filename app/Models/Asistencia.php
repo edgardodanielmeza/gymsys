@@ -20,16 +20,6 @@ class Asistencia extends Model
         'miembro_id',
         'sucursal_id',
         'user_id',
-        'fecha_hora_entrada',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'fecha_hora_entrada' => 'datetime',
     ];
 
     /**

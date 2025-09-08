@@ -26,15 +26,15 @@
                             <select id="renewal_tipo_membresia_id" wire:model="renewal_tipo_membresia_id" class="mt-1 block w-full rounded-md shadow-sm">
                                 <option value="">Seleccione un tipo</option>
                                 @foreach($tipos_membresia as $tipo)
-                                    <option value="{{ $tipo->id }}">{{ $tipo->nombre }} (${{ number_format($tipo->precio, 2) }})</option>
+                                    <option value="{{ $tipo->id }}">{{ $tipo->nombre }} ({{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($tipo->precio, 2) }})</option>
                                 @endforeach
                             </select>
                             @error('renewal_tipo_membresia_id') <span class="text-red-500 text-xs">{{ $message }}</span>@enderror
                         </div>
-                        <div>
-                            <input type="hidden" id="renewal_monto_pago" wire:model="renewal_monto_pago">
-                            @error('renewal_monto_pago') <span class="text-red-500 text-xs">Error al calcular el monto: {{ $message }}</span>@enderror
-                        </div>
+                        <input type="hidden" id="renewal_monto_pago" wire:model="renewal_monto_pago">
+                        @error('renewal_monto_pago')
+                        <div class="mt-2 text-red-500 text-xs">No se pudo calcular el monto. Por favor, seleccione un tipo de membresía.</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

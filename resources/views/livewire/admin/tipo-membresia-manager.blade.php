@@ -35,7 +35,7 @@
                         @foreach($tipos as $tipo)
                         <tr class="text-gray-700 dark:text-gray-300">
                             <td class="border px-4 py-2">{{ $tipo->nombre }}</td>
-                            <td class="border px-4 py-2">${{ number_format($tipo->precio, 2) }}</td>
+                            <td class="border px-4 py-2">{{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($tipo->precio, 2) }}</td>
                             <td class="border px-4 py-2">{{ $tipo->duracion_en_dias }}</td>
                             <td class="border px-4 py-2">
                                 <span class="{{ $tipo->activo ? 'bg-green-500' : 'bg-red-500' }} text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">

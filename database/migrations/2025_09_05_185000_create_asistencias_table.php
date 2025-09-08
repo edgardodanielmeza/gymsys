@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('miembro_id')->constrained('miembros')->onDelete('cascade');
             $table->foreignId('sucursal_id')->constrained('sucursales');
             $table->foreignId('user_id')->nullable()->constrained('users')->comment('Empleado que registró la entrada');
-            $table->timestamp('fecha_hora_entrada')->useCurrent();
-            $table->timestamps(); // FIX: Adding timestamps
+            $table->timestamps(); // Correct way to handle created_at and updated_at
         });
     }
 

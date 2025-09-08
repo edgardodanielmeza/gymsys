@@ -20,7 +20,7 @@
                             <ul class="mt-2 border dark:border-gray-700 rounded-md">
                                 @foreach($productos as $producto)
                                 <li wire:click="addToCart({{ $producto->id }})" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b dark:border-gray-600">
-                                    {{ $producto->nombre }} - ${{ number_format($producto->precio, 2) }} (Stock: {{ $producto->stock }})
+                                    {{ $producto->nombre }} - {{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($producto->precio, 2) }} (Stock: {{ $producto->stock }})
                                 </li>
                                 @endforeach
                             </ul>
@@ -41,13 +41,13 @@
                                         <span>{{ $item['nombre'] }}</span>
                                         <div class="flex items-center">
                                             <input type="number" wire:change="updateCartQuantity({{ $item['id'] }}, $event.target.value)" value="{{ $item['cantidad'] }}" class="w-16 text-center rounded-md text-sm">
-                                            <span class="ml-2 w-20 text-right">${{ number_format($item['precio'] * $item['cantidad'], 2) }}</span>
+                                            <span class="ml-2 w-20 text-right">{{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($item['precio'] * $item['cantidad'], 2) }}</span>
                                             <button wire:click="removeFromCart({{ $item['id'] }})" class="ml-2 text-red-500">X</button>
                                         </div>
                                     </div>
                                 @endforeach
                                 <div class="border-t dark:border-gray-700 mt-4 pt-4 text-right">
-                                    <p class="text-2xl font-bold">Total: ${{ number_format($total, 2) }}</p>
+                                    <p class="text-2xl font-bold">Total: {{ $appSettings['currency_symbol'] ?? '$' }}{{ number_format($total, 2) }}</p>
                                 </div>
                             @endif
 
