@@ -171,6 +171,26 @@ class MiembroManager extends Component
         $this->resetInputFields();
     }
 
+    public function updatedTipoMembresiaId($value)
+    {
+        if ($value) {
+            $tipo = TipoMembresia::find($value);
+            $this->monto_pago = $tipo ? $tipo->precio : null;
+        } else {
+            $this->monto_pago = null;
+        }
+    }
+
+    public function updatedRenewalTipoMembresiaId($value)
+    {
+        if ($value) {
+            $tipo = TipoMembresia::find($value);
+            $this->renewal_monto_pago = $tipo ? $tipo->precio : null;
+        } else {
+            $this->renewal_monto_pago = null;
+        }
+    }
+
     public function edit($id)
     {
         $miembro = Miembro::findOrFail($id);

@@ -1,54 +1,27 @@
-# Lista de Archivos Modificados y Creados
+# Lista de Cambios (Fase de Correcciones Finales)
 
-Hola! Aquí tienes un resumen de todos los archivos que he creado o modificado en tu proyecto. La forma más fácil de aplicar todo es seguir el archivo `INSTRUCCIONES.md`.
-
----
-
-### Archivos Modificados (los más importantes):
-- `routes/web.php`
-- `config/app.php`
-- `app/Models/User.php`
-- `app/Providers/JetstreamServiceProvider.php`
-- `database/seeders/DatabaseSeeder.php`
-- `resources/views/layouts/app.blade.php`
-- `resources/views/layouts/guest.blade.php`
-- `resources/views/navigation-menu.blade.php`
+Hola! Aquí tienes un resumen de los archivos que he modificado para implementar las últimas correcciones y mejoras que solicitaste.
 
 ---
 
-### Archivos y Carpetas Nuevas:
+### Archivos Modificados:
 
-#### Modelos (`app/Models/`):
-- `Sucursal.php`
-- `Miembro.php`
-- `TipoMembresia.php`
-- `Membresia.php`
-- `Pago.php`
+1.  **`app/Livewire/Admin/SettingsManager.php`**
+    *   **Cambio:** Se modificó el método `save()` para que redirija a la misma página después de guardar.
+    *   **Razón:** Esto fuerza un refresco completo de la página, asegurando que el nuevo logo y nombre del gimnasio se muestren inmediatamente en la barra de navegación.
 
-#### Componentes de Livewire (`app/Livewire/`):
-- `Admin/SucursalManager.php`
-- `Admin/TipoMembresiaManager.php`
-- `Admin/PagoManager.php`
-- `Auth/SelectBranch.php`
-- `MiembroManager.php`
-- `MiembroProfile.php`
+2.  **`app/Livewire/MiembroManager.php`**
+    *   **Cambio:** Se añadieron los métodos `updatedTipoMembresiaId()` y `updatedRenewalTipoMembresiaId()`.
+    *   **Razón:** Para que el precio de la membresía se cargue automáticamente en el campo de pago cuando se selecciona un tipo de membresía, tanto al crear un nuevo miembro como al renovar.
 
-#### Vistas (`resources/views/`):
-- Carpeta `livewire/` con todos sus subdirectorios y archivos `.blade.php`.
-- `components/theme-switcher.blade.php`
+3.  **`resources/views/livewire/miembro-modal.blade.php`**
+    *   **Cambio:** Se añadió el atributo `readonly` al campo de "Monto a Pagar".
+    *   **Razón:** Para prevenir que el monto se modifique manualmente, ya que ahora se calcula automáticamente.
 
-#### Base de Datos (`database/`):
-- 6 nuevos archivos de migración en la carpeta `migrations/`.
-- `seeders/InitialSetupSeeder.php`
-- `seeders/TipoMembresiaSeeder.php`
-
-#### Otros Archivos Clave:
-- `lang/es.json` (archivo de traducción al español)
-- `app/Http/Responses/LoginResponse.php` (para la selección de sucursal)
-- `INSTRUCCIONES.md` (con los comandos a ejecutar)
-- `DIAGRAMA_CLASES.md`
-- `PROMPT_MEJORADO.md`
+4.  **`resources/views/livewire/miembro-renewal-modal.blade.php`**
+    *   **Cambio:** Se añadió el atributo `readonly` al campo de "Monto a Pagar".
+    *   **Razón:** Igual que en el modal de creación, para asegurar que se use el precio automático del plan.
 
 ---
 
-**Instrucción Clave:** Simplemente copia estos archivos y carpetas en tu proyecto local. Luego, sigue los pasos del archivo `INSTRUCCIONES.md` para ejecutar los comandos `php artisan...`. Eso configurará la base de datos y dejará todo funcionando.
+**Instrucción Clave:** Reemplaza estos cuatro archivos en tu proyecto local. No es necesario ejecutar migraciones, pero si hiciste cambios en los `scripts`, es recomendable ejecutar `npm run build`.

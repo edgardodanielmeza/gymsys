@@ -47,7 +47,7 @@ class SettingsManager extends Component
 
         session()->flash('message', 'Configuración guardada con éxito.');
 
-        // Forzar un refresco de la página para que el nuevo nombre/logo se vea en el layout
-        $this->dispatch('settings-updated');
+        // Redirigir a la misma página para forzar un refresco completo y ver los cambios
+        return $this->redirect(route('admin.settings'), navigate: true);
     }
 }
