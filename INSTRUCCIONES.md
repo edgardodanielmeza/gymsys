@@ -33,11 +33,12 @@ php artisan migrate
 
 ### Paso 4: Poblar la Base de Datos con Datos Iniciales
 
-El siguiente comando ejecutará los seeders que he creado. Esto creará los roles, sucursales, tipos de membresía de ejemplo y el usuario administrador (`admin@admin.com` / `gym123admin`).
+El siguiente comando ejecutará los seeders que he creado. Esto creará los roles, sucursales, tipos de membresía de ejemplo y el usuario administrador.
 
 ```bash
 php artisan db:seed
 ```
+**Nota sobre datos de muestra:** Si estás en un entorno de desarrollo (`APP_ENV=local` en tu `.env`), este comando también ejecutará el `SampleDataSeeder` para llenar la base de datos con docenas de miembros, ventas y asistencias de ejemplo. Esto es ideal para probar el dashboard. Si no quieres los datos de muestra, puedes comentar la línea `$this->call(SampleDataSeeder::class);` en `database/seeders/DatabaseSeeder.php`.
 
 ### Paso 5: Crear el Enlace Simbólico de Almacenamiento
 

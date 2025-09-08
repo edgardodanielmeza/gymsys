@@ -11,6 +11,7 @@ use App\Livewire\Admin\CajaManager;
 use App\Livewire\Admin\PointOfSale;
 use App\Livewire\Auth\SelectBranch;
 use App\Livewire\CheckinManager;
+use App\Livewire\DashboardManager;
 use App\Livewire\MiembroManager;
 use App\Livewire\MiembroProfile;
 
@@ -26,9 +27,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardManager::class)->name('dashboard');
 
     // Rutas Principales (Recepcionista y Admin)
     Route::middleware(['role:Admin|Recepcionista'])->group(function () {
