@@ -31,10 +31,9 @@
                             </select>
                             @error('renewal_tipo_membresia_id') <span class="text-red-500 text-xs">{{ $message }}</span>@enderror
                         </div>
-                        <div class="mb-4">
-                            <label for="renewal_monto_pago" class="block text-sm font-bold">Monto a Pagar</label>
-                            <input type="number" step="0.01" id="renewal_monto_pago" wire:model="renewal_monto_pago" class="mt-1 block w-full rounded-md shadow-sm bg-gray-100 dark:bg-gray-700" readonly>
-                            @error('renewal_monto_pago') <span class="text-red-500 text-xs">{{ $message }}</span>@enderror
+                        <div>
+                            <input type="hidden" id="renewal_monto_pago" wire:model="renewal_monto_pago">
+                            @error('renewal_monto_pago') <span class="text-red-500 text-xs">Error al calcular el monto: {{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>
