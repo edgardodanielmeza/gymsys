@@ -6,6 +6,9 @@ use App\Livewire\Admin\TipoMembresiaManager;
 use App\Livewire\Admin\PagoManager;
 use App\Livewire\Admin\SettingsManager;
 use App\Livewire\Admin\UserManager;
+use App\Livewire\Admin\ProductManager;
+use App\Livewire\Admin\CajaManager;
+use App\Livewire\Admin\PointOfSale;
 use App\Livewire\Auth\SelectBranch;
 use App\Livewire\CheckinManager;
 use App\Livewire\MiembroManager;
@@ -32,6 +35,7 @@ Route::middleware([
         Route::get('/check-in', CheckinManager::class)->name('check-in');
         Route::get('/miembros', MiembroManager::class)->name('miembros.index');
         Route::get('/miembros/{miembro}', MiembroProfile::class)->name('miembros.show');
+        Route::get('/pos', PointOfSale::class)->name('pos');
     });
 
     // Rutas de Administración
@@ -41,5 +45,7 @@ Route::middleware([
         Route::get('/pagos', PagoManager::class)->name('pagos.index');
         Route::get('/users', UserManager::class)->name('users.index');
         Route::get('/settings', SettingsManager::class)->name('settings');
+        Route::get('/productos', ProductManager::class)->name('productos.index');
+        Route::get('/caja', CajaManager::class)->name('caja.manager');
     });
 });

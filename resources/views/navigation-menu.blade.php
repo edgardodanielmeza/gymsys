@@ -21,7 +21,10 @@
                     </x-nav-link>
 
                     @role('Admin|Recepcionista')
-                    <x-nav-link href="{{ route('check-in') }}" :active="request()->routeIs('check-in')">
+                    <x-nav-link href="{{ route('pos') }}" :active="request()->routeIs('pos')">
+                        {{ __('Punto de Venta') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('check-in') }}" :active="request()->routeIs('check-in')" class="ml-4">
                         {{ __('Check-in') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('miembros.index') }}" :active="request()->routeIs('miembros.index*')" class="ml-4">
@@ -45,12 +48,17 @@
                                 </x-slot>
 
                                 <x-slot name="content">
+                                    <div class="block px-4 py-2 text-xs text-gray-400">{{ __('Ventas e Inventario') }}</div>
+                                    <x-dropdown-link href="{{ route('admin.productos.index') }}">{{ __('Productos') }}</x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('admin.caja.manager') }}">{{ __('Caja') }}</x-dropdown-link>
+                                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                                    <div class="block px-4 py-2 text-xs text-gray-400">{{ __('Gimnasio') }}</div>
                                     <x-dropdown-link href="{{ route('admin.sucursales.index') }}">{{ __('Sucursales') }}</x-dropdown-link>
                                     <x-dropdown-link href="{{ route('admin.tipos-membresia.index') }}">{{ __('Tipos de Membresía') }}</x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('admin.pagos.index') }}">{{ __('Pagos') }}</x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('admin.pagos.index') }}">{{ __('Reporte de Pagos') }}</x-dropdown-link>
                                     <x-dropdown-link href="{{ route('admin.users.index') }}">{{ __('Usuarios') }}</x-dropdown-link>
                                     <div class="border-t border-gray-200 dark:border-gray-600"></div>
-                                    <x-dropdown-link href="{{ route('admin.settings') }}">{{ __('Configuración') }}</x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('admin.settings') }}">{{ __('Configuración General') }}</x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
                         </div>
@@ -197,6 +205,9 @@
             </x-responsive-nav-link>
 
             @role('Admin|Recepcionista')
+            <x-responsive-nav-link href="{{ route('pos') }}" :active="request()->routeIs('pos')">
+                {{ __('Punto de Venta') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('check-in') }}" :active="request()->routeIs('check-in')">
                 {{ __('Check-in') }}
             </x-responsive-nav-link>
@@ -210,21 +221,13 @@
                 <div class="block px-4 py-2 text-xs text-gray-400">
                     {{ __('Administración') }}
                 </div>
-                <x-responsive-nav-link href="{{ route('admin.sucursales.index') }}" :active="request()->routeIs('admin.sucursales.index')">
-                    {{ __('Sucursales') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('admin.tipos-membresia.index') }}" :active="request()->routeIs('admin.tipos-membresia.index')">
-                    {{ __('Tipos de Membresía') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('admin.pagos.index') }}" :active="request()->routeIs('admin.pagos.index')">
-                    {{ __('Pagos') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.index')">
-                    {{ __('Usuarios') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('admin.settings') }}" :active="request()->routeIs('admin.settings')">
-                    {{ __('Configuración') }}
-                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.productos.index') }}">{{ __('Productos') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.caja.manager') }}">{{ __('Caja') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.sucursales.index') }}">{{ __('Sucursales') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.tipos-membresia.index') }}">{{ __('Tipos de Membresía') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.pagos.index') }}">{{ __('Reporte de Pagos') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.users.index') }}">{{ __('Usuarios') }}</x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.settings') }}">{{ __('Configuración General') }}</x-responsive-nav-link>
             </div>
             @endrole
         </div>

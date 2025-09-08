@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('sucursal_id')->constrained('sucursales');
             $table->foreignId('user_id')->nullable()->constrained('users')->comment('Empleado que registró la entrada');
             $table->timestamp('fecha_hora_entrada')->useCurrent();
-            // created_at y updated_at no son necesarios si usamos fecha_hora_entrada
+            $table->timestamps(); // FIX: Adding timestamps
         });
     }
 

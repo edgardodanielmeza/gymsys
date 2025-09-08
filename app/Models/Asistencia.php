@@ -33,11 +33,6 @@ class Asistencia extends Model
     ];
 
     /**
-     * We don't use updated_at in this table.
-     */
-    const UPDATED_AT = null;
-
-    /**
      * Get the miembro associated with the asistencia.
      */
     public function miembro()
