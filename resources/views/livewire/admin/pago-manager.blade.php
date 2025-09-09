@@ -28,7 +28,7 @@
                  {{-- Total y Botón de Filtrar --}}
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                        Total del Periodo: ${{ number_format($total_filtrado, 2) }}
+                        Total del Periodo: {{ format_money($total_filtrado) }}
                     </h3>
                     <button wire:click="filter" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Filtrar
@@ -53,7 +53,7 @@
                             <tr class="text-gray-700 dark:text-gray-300 border-b dark:border-gray-700">
                                 <td class="px-4 py-2">{{ $pago->fecha_pago->format('d/m/Y H:i') }}</td>
                                 <td class="px-4 py-2">{{ $pago->membresia->miembro->fullName ?? 'N/A' }}</td>
-                                <td class="px-4 py-2">${{ number_format($pago->monto, 2) }}</td>
+                                <td class="px-4 py-2">{{ format_money($pago->monto) }}</td>
                                 <td class="px-4 py-2">{{ $pago->metodo_pago }}</td>
                                 <td class="px-4 py-2">{{ $pago->membresia->sucursal->nombre ?? 'N/A' }}</td>
                                 <td class="px-4 py-2">{{ $pago->usuario->name ?? 'Sistema' }}</td>

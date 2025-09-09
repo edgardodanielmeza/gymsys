@@ -57,7 +57,7 @@
                         <thead><tr class="bg-gray-100 dark:bg-gray-700"><th class="px-4 py-2 text-left">Plan</th><th class="px-4 py-2 text-left">Inicio</th><th class="px-4 py-2 text-left">Fin</th><th class="px-4 py-2 text-left">Estado</th><th class="px-4 py-2 text-left">Monto</th></tr></thead>
                         <tbody>
                             @forelse($miembro->membresias->sortByDesc('fecha_inicio') as $membresia)
-                            <tr class="border-b dark:border-gray-700"><td class="px-4 py-2">{{ $membresia->tipoMembresia->nombre }}</td><td class="px-4 py-2">{{ $membresia->fecha_inicio->format('d/m/Y') }}</td><td class="px-4 py-2">{{ $membresia->fecha_fin->format('d/m/Y') }}</td><td class="px-4 py-2">{{ ucfirst($membresia->estado) }}</td><td class="px-4 py-2">${{ number_format($membresia->monto_pagado, 2) }}</td></tr>
+                            <tr class="border-b dark:border-gray-700"><td class="px-4 py-2">{{ $membresia->tipoMembresia->nombre }}</td><td class="px-4 py-2">{{ $membresia->fecha_inicio->format('d/m/Y') }}</td><td class="px-4 py-2">{{ $membresia->fecha_fin->format('d/m/Y') }}</td><td class="px-4 py-2">{{ ucfirst($membresia->estado) }}</td><td class="px-4 py-2">{{ format_money($membresia->monto_pagado) }}</td></tr>
                             @empty
                             <tr><td colspan="5" class="text-center py-4">No hay membresías registradas.</td></tr>
                             @endforelse
@@ -77,7 +77,7 @@
                                 $allPagos = $miembro->membresias->flatMap(fn($m) => $m->pagos)->sortByDesc('fecha_pago');
                             @endphp
                             @forelse($allPagos as $pago)
-                            <tr class="border-b dark:border-gray-700"><td class="px-4 py-2">{{ $pago->fecha_pago->format('d/m/Y H:i') }}</td><td class="px-4 py-2">${{ number_format($pago->monto, 2) }}</td><td class="px-4 py-2">{{ $pago->metodo_pago }}</td><td class="px-4 py-2">{{ $pago->membresia->tipoMembresia->nombre }} ({{ $pago->membresia->fecha_inicio->format('d/m/Y') }})</td></tr>
+                            <tr class="border-b dark:border-gray-700"><td class="px-4 py-2">{{ $pago->fecha_pago->format('d/m/Y H:i') }}</td><td class="px-4 py-2">{{ format_money($pago->monto) }}</td><td class="px-4 py-2">{{ $pago->metodo_pago }}</td><td class="px-4 py-2">{{ $pago->membresia->tipoMembresia->nombre }} ({{ $pago->membresia->fecha_inicio->format('d/m/Y') }})</td></tr>
                             @empty
                             <tr><td colspan="4" class="text-center py-4">No hay pagos registrados.</td></tr>
                             @endforelse
