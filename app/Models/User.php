@@ -9,16 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles; // Importante: Trait de Spatie
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'activo',
+        'sucursal_id',
     ];
 
     /**
@@ -62,6 +64,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'activo' => 'boolean',
         ];
+    }
+
+    /**
+     * Define la relación con la sucursal a la que pertenece el usuario.
+     */
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
+    /**
+     * Get all of the asistencias for the User.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
     }
 }
