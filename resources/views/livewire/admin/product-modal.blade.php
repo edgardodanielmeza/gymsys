@@ -18,9 +18,14 @@
                             <label for="descripcion_producto" class="block text-sm font-bold">Descripción</label>
                             <textarea id="descripcion_producto" wire:model.defer="descripcion_producto" class="mt-1 block w-full rounded-md shadow-sm"></textarea>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-3 gap-4">
                             <div class="mb-4">
-                                <label for="precio" class="block text-sm font-bold">Precio</label>
+                                <label for="costo" class="block text-sm font-bold">Costo</label>
+                                <input type="number" step="0.01" id="costo" wire:model.defer="costo" class="mt-1 block w-full rounded-md shadow-sm">
+                                @error('costo') <span class="text-red-500 text-xs">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="precio" class="block text-sm font-bold">Precio (Venta)</label>
                                 <input type="number" step="0.01" id="precio" wire:model.defer="precio" class="mt-1 block w-full rounded-md shadow-sm">
                                 @error('precio') <span class="text-red-500 text-xs">{{ $message }}</span>@enderror
                             </div>

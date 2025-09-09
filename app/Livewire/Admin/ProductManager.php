@@ -12,7 +12,7 @@ class ProductManager extends Component
     use WithPagination;
 
     // Propiedades para Productos
-    public $producto_id, $nombre_producto, $descripcion_producto, $precio, $stock, $sku, $categoria_id;
+    public $producto_id, $nombre_producto, $descripcion_producto, $precio, $costo, $stock, $sku, $categoria_id;
 
     // Propiedades para Categorías
     public $categoria_id_edit, $nombre_categoria, $descripcion_categoria;
@@ -51,6 +51,7 @@ class ProductManager extends Component
         $this->validate([
             'nombre_producto' => 'required|string|max:255',
             'precio' => 'required|numeric|min:0',
+            'costo' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|unique:productos,sku,' . $this->producto_id,
             'categoria_id' => 'nullable|exists:categorias_producto,id',
@@ -60,6 +61,7 @@ class ProductManager extends Component
             'nombre' => $this->nombre_producto,
             'descripcion' => $this->descripcion_producto,
             'precio' => $this->precio,
+            'costo' => $this->costo,
             'stock' => $this->stock,
             'sku' => $this->sku,
             'categoria_id' => $this->categoria_id,
@@ -77,6 +79,7 @@ class ProductManager extends Component
         $this->nombre_producto = $producto->nombre;
         $this->descripcion_producto = $producto->descripcion;
         $this->precio = $producto->precio;
+        $this->costo = $producto->costo;
         $this->stock = $producto->stock;
         $this->sku = $producto->sku;
         $this->categoria_id = $producto->categoria_id;
@@ -89,6 +92,7 @@ class ProductManager extends Component
         $this->nombre_producto = '';
         $this->descripcion_producto = '';
         $this->precio = '';
+        $this->costo = '';
         $this->stock = '';
         $this->sku = '';
         $this->categoria_id = null;

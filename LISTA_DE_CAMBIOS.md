@@ -1,44 +1,38 @@
-# Lista de Cambios (Fase de Correcciones Finales 2)
+# Lista de Cambios (Fase de Refinamiento de Productos)
 
-Hola! Aquí tienes un resumen de los últimos archivos que he modificado para refinar la interfaz y la lógica de negocio.
-
----
-
-### Archivos Modificados:
-
-1.  **`app/Livewire/Admin/SettingsManager.php`**
-    *   **Cambio:** Se modificó el método `save()` para que redirija a la misma página después de guardar.
-    *   **Razón:** Esto fuerza un refresco completo de la página, asegurando que el nuevo logo y nombre del gimnasio se muestren inmediatamente.
-
-2.  **`app/Livewire/MiembroManager.php`**
-    *   **Cambio:** Se añadieron los métodos `updatedTipoMembresiaId()` y `updatedRenewalTipoMembresiaId()`.
-    *   **Razón:** Para que el precio de la membresía se cargue automáticamente en el campo de pago cuando se selecciona un tipo de membresía.
-
-3.  **`resources/views/livewire/miembro-modal.blade.php`**
-    *   **Cambio:** Se ha ocultado completamente el campo de "Monto a Pagar" (`type="hidden"`).
-    *   **Razón:** Para simplificar la interfaz del operador, ya que el monto ahora es automático.
-
-4.  **`resources/views/livewire/miembro-renewal-modal.blade.php`**
-    *   **Cambio:** Se ha ocultado completamente el campo de "Monto a Pagar" (`type="hidden"`).
-    *   **Razón:** Misma razón que en el modal de creación, para simplificar y evitar errores.
-
-### Archivos Corregidos en Depuración Anterior (Asegúrate de tener esta versión):
-
-*   **`database/migrations/2025_09_05_185000_create_asistencias_table.php`**: Debe tener la línea `$table->timestamps();`.
-*   **`bootstrap/app.php`**: Debe tener el `alias` para el middleware de `role`.
-*   **`tailwind.config.js`**: Debe tener la opción `darkMode: 'class'`.
-*   **`resources/js/theme.js`**: Nuevo archivo con la lógica de AlpineJS.
-*   **`resources/js/app.js`**: Debe importar `./theme.js`.
-*   **`resources/views/layouts/app.blade.php` y `guest.blade.php`**: Deben tener la lógica del tema pero SIN la definición de la función `themeSwitcher()` dentro.
+Hola! Aquí tienes un resumen de los archivos que he modificado para añadir el costo de los productos y mejorar los datos de muestra.
 
 ---
 
-**Instrucción Clave:** Reemplaza los archivos modificados en tu proyecto local. Luego, para asegurar que todos los errores se solucionen, ejecuta los siguientes comandos:
+### Archivos Modificados o Creados:
+
+1.  **`database/migrations/2025_09_09_041200_add_costo_to_productos_table.php` (Nuevo)**
+    *   **Cambio:** Nueva migración que añade la columna `costo` a la tabla `productos`.
+
+2.  **`app/Models/Producto.php`**
+    *   **Cambio:** Se añadió `costo` a los arrays `$fillable` y `$casts`.
+    *   **Razón:** Para que el nuevo campo de costo sea manejado correctamente por el modelo.
+
+3.  **`app/Livewire/Admin/ProductManager.php`**
+    *   **Cambio:** Se añadió la lógica para manejar el campo `costo` en el formulario (al crear y editar).
+
+4.  **`resources/views/livewire/admin/product-modal.blade.php`**
+    *   **Cambio:** Se añadió el campo de entrada para `costo` en el formulario del modal.
+
+5.  **`database/seeders/SampleDataSeeder.php`**
+    *   **Cambio:** Se reemplazó la creación de productos aleatorios por una lista predefinida de 10 productos de gimnasio realistas, en español y con su `costo` y `precio`.
+
+---
+
+**Instrucción Clave:**
+Para aplicar estos cambios, añade los archivos nuevos y reemplaza los modificados en tu proyecto. Luego, ejecuta el siguiente comando en tu terminal para actualizar la base de datos:
 
 ```bash
-# Para reconstruir la base de datos con todas las tablas correctas
-php artisan migrate:fresh --seed
-
-# Para recompilar los archivos de JavaScript y CSS
-npm run build
+php artisan migrate
 ```
+
+Si quieres ver los nuevos productos de ejemplo, puedes ejecutar:
+```bash
+php artisan migrate:fresh --seed
+```
+(Recuerda que `migrate:fresh` borrará todos tus datos actuales).
