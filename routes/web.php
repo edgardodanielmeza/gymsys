@@ -36,6 +36,7 @@ Route::middleware([
         Route::get('/miembros', MiembroManager::class)->name('miembros.index');
         Route::get('/miembros/{miembro}', MiembroProfile::class)->name('miembros.show');
         Route::get('/pos', PointOfSale::class)->name('pos');
+        Route::get('/caja', CajaManager::class)->name('caja.manager');
     });
 
     // Rutas de Administración

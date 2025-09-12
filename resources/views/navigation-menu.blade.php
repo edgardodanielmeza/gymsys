@@ -1,24 +1,35 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-300">
+<nav x-data="{ open: false }" class="bg-slate-500 decoration-white border-b border-gray-300">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
+                 <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @if (session()->has('selected_sucursal_nombre'))
+                    <div class="me-3">
+                        <span class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-800 bg-gray-200   hover:border-indigo-500  dark:text-gray-300 bg-gray-100 dark:bg-gray-800">
+                             {{ session('selected_sucursal_nombre') }}
+                             {{-- @dd(session()) --}}
+                        </span>
+                    </div>
+                @endif
+                </div>
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-center">
+
+                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-white">
                         @if (isset($appSettings['gym_logo']))
-                            <img src="{{ asset('storage/' . $appSettings['gym_logo']) }}" alt="{{ $appSettings['gym_name'] ?? config('app.name') }}" class="h-10 w-10 rounded-full object-cover">
+                            <img src="{{ asset('storage/' . $appSettings['gym_logo']) }}" alt="{{ $appSettings['gym_name'] ?? config('app.name') }}" class="h-14 w-14 rounded-full object-cover">
                         @else
                             <x-application-mark class="block h-9 w-auto" />
                         @endif
-                        @if (isset($appSettings['gym_name']))
+                        {{-- @if (isset($appSettings['gym_name']))
                             <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $appSettings['gym_name'] }}</span>
-                        @endif
+                        @endif --}}
                     </a>
+
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex  ">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -42,6 +53,10 @@
                                 <x-slot name="trigger">
                                     <span class="inline-flex rounded-md">
                                         <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+                                            </svg>
+
                                             Administración
                                             <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -60,6 +75,8 @@
                                     <x-dropdown-link href="{{ route('admin.tipos-membresia.index') }}">{{ __('Tipos de Membresía') }}</x-dropdown-link>
                                     <x-dropdown-link href="{{ route('admin.pagos.index') }}">{{ __('Reporte de Pagos') }}</x-dropdown-link>
                                     <x-dropdown-link href="{{ route('admin.users.index') }}">{{ __('Usuarios') }}</x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('auth.select-branch') }}">{{ __('Cambio de Sucursal') }}</x-dropdown-link>
+                            
                                     <div class="border-t border-gray-200 dark:border-gray-600"></div>
                                     <x-dropdown-link href="{{ route('admin.settings') }}">{{ __('Configuración General') }}</x-dropdown-link>
                                 </x-slot>
@@ -71,13 +88,7 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                @if (session()->has('selected_sucursal_nombre'))
-                    <div class="me-3">
-                        <span class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800">
-                            Sucursal: {{ session('selected_sucursal_nombre') }}
-                        </span>
-                    </div>
-                @endif
+
 
                 <div class="ms-3 relative">
                     <x-theme-switcher />
@@ -145,7 +156,12 @@
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
+                                   
+
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
                                         {{ Auth::user()->name }}
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -158,7 +174,7 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
+                            <div class="block px-4 py-2 text-xs text-gray-800">
                                 {{ __('Manage Account') }}
                             </div>
 
